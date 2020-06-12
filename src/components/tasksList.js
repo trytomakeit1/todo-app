@@ -1,13 +1,14 @@
 import React from 'react';
 
-
 class TasksList extends React.Component {
 
     constructor(props){
         super(props);
         this.state={};
-        console.log(this.props.tasksList);
-    }
+
+    }        
+    
+
 
     render(){
         return(
@@ -15,7 +16,7 @@ class TasksList extends React.Component {
             <div>
 
                 {this.props.tasksList.map((element, index)=>{
-                console.log(element);
+
                     return(
                         <div className="taskContainer" key={element.id} >
                             <div>
@@ -34,18 +35,16 @@ class TasksList extends React.Component {
                                 */}
                                 <h5 className="inlineBlock">Due date:</h5>
                                 <span style={{padding: '0px 20px'}}>
-                                    {new Date(element.date).toDateString()
-                                    }</span>
+                                    {new Date(element.date).toDateString()}
+                                </span>
                                 <h5 className="inlineBlock">Done: </h5>
 
-                                {/* checked={element.finished} 
-                                 */}
                                 <input style={{padding: '0px 20px'}} type="checkbox" disabled checked={element.finished}/>
                             </div>
                             
                             
                             <div>
-                                <button className="pull-right">Go to details</button>
+                                <button className="pull-right" onClick={()=>this.props.getDetails(element.id)}>Go to details</button>
                             </div>
                             
                             <div style={{clear: 'both'}}></div>
