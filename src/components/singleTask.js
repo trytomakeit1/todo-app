@@ -9,7 +9,6 @@ class SingleTask extends Component{
 
     render(){
 
-        console.log("task in singleTask", this.props );
         return(
             <div className="taskContainer">
                 

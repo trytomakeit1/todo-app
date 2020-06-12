@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+
 class TasksList extends React.Component {
 
     constructor(props){
@@ -20,19 +22,12 @@ class TasksList extends React.Component {
                     return(
                         <div className="taskContainer" key={element.id} >
                             <div>
-                               {/*  {element.finished ? 
-                                    <img src="../../images/true_sign.png" /> : ''
-                                } */}
                                 <div>
                                     <h5 className="inlineBlock">Title:</h5>
                                     <span style={{padding: '0px 20px'}}>{element.title}</span>
                                 </div>
 
                                 <hr />
-
-                                {/* <h5>Description:</h5>
-                                <p>{element.description}</p>
-                                */}
                                 <h5 className="inlineBlock">Due date:</h5>
                                 <span style={{padding: '0px 20px'}}>
                                     {new Date(element.date).toDateString()}
@@ -44,7 +39,7 @@ class TasksList extends React.Component {
                             
                             
                             <div>
-                                <button className="pull-right" onClick={()=>this.props.getDetails(element.id)}>Go to details</button>
+                                <Link className="button pull-right" to={`/task/${element.id}`}    onClick={()=>this.props.getDetails(element.id)}>Go to details</Link>
                             </div>
                             
                             <div style={{clear: 'both'}}></div>
