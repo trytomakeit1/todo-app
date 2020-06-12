@@ -1,8 +1,9 @@
 import React from 'react';
 import TasksList from './tasksList';
-
-import * as data from '../../tasks.json';
 import SingleTask from './singleTask';
+import NewTask from './newTask';
+import * as data from '../../tasks.json';
+
 import {Route} from 'react-router-dom';
 
 export default class Content extends React.Component{
@@ -10,7 +11,7 @@ export default class Content extends React.Component{
     constructor(){
         super();
         this.state={
-            currentTask: {}
+            tasks: data.todoList
         };
         this.getDetails = this.getDetails.bind(this);
         
@@ -30,6 +31,12 @@ export default class Content extends React.Component{
     }
 
 
+    addNewTask(newTask){
+
+        console.log("add new task", newTask);
+        //update the state with new data
+
+    }
 
     render(){
         
@@ -38,8 +45,8 @@ export default class Content extends React.Component{
                 <p>This is the main content.</p>
                 <Route exact path="/" render={()=>(
                     
-                        <TasksList tasksList={data.todoList} getDetails={(taskId)=>this.getDetails(taskId)} />
-                    )}>
+                    <TasksList tasksList={this.state.tasks} getDetails={(taskId)=>this.getDetails(taskId)} />
+                )}>
                 
                 </Route>
 
@@ -47,6 +54,14 @@ export default class Content extends React.Component{
 
                     <SingleTask task={this.state.currentTask}/>
                 )}>
+                </Route>
+
+                <Route path="/new" render={()=>(
+                    <NewTask  />
+
+                )}>
+
+
                 </Route>
 
             </div>

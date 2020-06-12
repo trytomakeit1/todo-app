@@ -39,7 +39,7 @@ class TasksList extends React.Component {
                             
                             
                             <div>
-                                <Link className="button pull-right" to={`/task/${element.id}`}    onClick={()=>this.props.getDetails(element.id)}>Go to details</Link>
+                                <Link className="button pull-right" to={`/task/${element.id}`} onClick={()=>this.props.getDetails(element.id)}>Go to details</Link>
                             </div>
                             
                             <div style={{clear: 'both'}}></div>

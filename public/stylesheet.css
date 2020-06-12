@@ -19,6 +19,9 @@ body {
 .inlineBlock{
     display: inline-block;
 }
+.display-table {
+    display: table;
+}
 
 /* Header */
 
@@ -63,5 +66,32 @@ button:hover, button:focus,
    /* text-decoration: underline; */
     box-shadow: inset 0px 0px 10px 1px darkcyan;
     outline: none;
+}
 
+
+.form-container{
+    border: 1px solid lightgray;
+    padding: 20px;
+}
+
+.form-control {
+    margin-bottom: 20px
+}
+
+.form-control label{
+    font-weight: 600;
+}
+
+.form-control input{
+    margin-left: 10px;
+    min-height: 23px;
+    min-width: 250px;
+
+}
+
+.form-control textarea{
+    margin-left: 10px;
+    vertical-align: top;
+    min-width: 250px;
+    min-height: 100px;
 }
