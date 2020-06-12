@@ -6,3 +6,60 @@ body {
     max-width: 1000px;
     margin: 0 auto;
 }
+
+
+/* useful classes */
+.text-center {
+    text-align: center;
+}
+.pull-right {
+    float: right;
+}
+
+.inlineBlock{
+    display: inline-block;
+}
+
+/* Header */
+
+.navbar{
+    background-color: turquoise;
+    padding: 20px;
+}
+
+.navbar a{
+    padding: 10px;
+    text-decoration: none;
+    color: darkblue;
+    
+}
+.navbar a:hover, .navbar a:active, .navbar a:visited{
+    text-decoration: underline;
+}
+
+
+
+/* Tasks */
+.taskContainer {
+    border: 1px solid lightgray;
+    padding: 20px;
+    margin: 10px 0px;
+
+}
+.taskContainer h5 {
+    color: brown;
+}
+
+
+button{
+    padding: 20px;
+    background-color:deepskyblue;
+    border: none;
+    border-radius: 5px;
+}
+button:hover, button:focus{
+   /* text-decoration: underline; */
+    box-shadow: inset 0px 0px 10px 1px darkcyan;
+    outline: none;
+
+}

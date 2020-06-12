@@ -1,0 +1,23 @@
+{
+
+    "todoList": [
+        {
+
+            "id": 1591961611970,
+            "title": "first note",
+            "description": "this is my first task to do",
+            "date": 1591961611970,
+            "finished": true
+        },
+        {
+            "id": 1591961813171,
+            "title": "second note",
+            "description": "this is my second task to do",
+            "date": 1591961813171,
+            "finished": false
+        }
+
+    ]
+
+
+}
