@@ -10,9 +10,9 @@ const Header = () =>{
 
             {/* Menu */}
             <div className="navbar">
-                
+                <Link to="/">Home</Link>
                 <Link to="/new">New Task</Link>
-                <a href="#about">About</a>
+                <Link to="/about">About</Link>
 
             </div>
         </div>

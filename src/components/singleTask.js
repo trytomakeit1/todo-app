@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
+
 
 class SingleTask extends Component{
 
@@ -29,7 +31,10 @@ class SingleTask extends Component{
                 <h5 className="inlineBlock">Done: </h5>
 
                 <input style={{padding: '0px 20px'}} type="checkbox" disabled checked={this.props.task.finished}/>
-                        
+                <div>
+                    <Link to="/" className="button">Back to list</Link>
+                </div>
+
         </div>)
     }
 }

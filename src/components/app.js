@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Header from './header';
 import Content from './content';
-
+import {Route} from 'react-router-dom';
+import About from './about';
 
 class App extends Component {
 
@@ -17,6 +18,9 @@ class App extends Component {
             <div className="container">
                 <Header />
                 <Content />
+
+                
+                <Route path="/about" component={About} />
             </div>
         )
     }

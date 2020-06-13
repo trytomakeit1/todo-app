@@ -38,7 +38,7 @@ class NewTask extends Component {
 
         //onNewTask={this.addNewTask(newTask)}
         return(
-        <div><h3>Add a new task</h3>
+        <div><h2>Add a new task</h2>
             <div className="form-container">
                 <form onSubmit={()=>this.addNewTask(event)}>
                     <div className="form-control">
