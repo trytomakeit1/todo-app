@@ -6,7 +6,33 @@ class NewTask extends Component {
     constructor(){
         super();
         this.state={};
+        this.addNewTask = this.addNewTask.bind(this);
     }
+
+
+
+    addNewTask(event){
+        // 1) get all the values from input fields
+        event.preventDefault();
+        const title = event.target.elements.title.value;
+        const description = event.target.elements.description.value;        
+        const date = event.target.elements.date.value;
+
+        
+        // 2) create an object to be added to the main data
+
+        let newTask={
+            id: Number(new Date()),
+            title,
+            description,
+            date,
+            finished: false
+        }
+
+        this.props.onNewTask(newTask);
+
+    }
+
 
     render(){
 
@@ -14,7 +40,7 @@ class NewTask extends Component {
         return(
         <div><h3>Add a new task</h3>
             <div className="form-container">
-                <form>
+                <form onSubmit={()=>this.addNewTask(event)}>
                     <div className="form-control">
                         <label htmlFor="title">Title:</label>
                         <input id="title" type="text" name="title"></input>

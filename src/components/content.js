@@ -35,8 +35,12 @@ export default class Content extends React.Component{
 
         console.log("add new task", newTask);
         //update the state with new data
+        this.setState((state)=>({
+            tasks: this.state.tasks.concat(newTask)
+        }));
 
     }
+
 
     render(){
         
@@ -56,10 +60,23 @@ export default class Content extends React.Component{
                 )}>
                 </Route>
 
-                <Route path="/new" render={()=>(
-                    <NewTask  />
-
-                )}>
+                <Route path="/new" render={({history})=>{
+                    return (
+                        <NewTask  onNewTask={(newTask)=>
+                            {
+                                this.addNewTask(newTask);
+                                history.push("/");
+                            
+                            }
+                
+                
+                
+                        }/>
+                   
+                   
+                    )
+                }
+                }>
 
 
                 </Route>
