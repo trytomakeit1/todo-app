@@ -7,7 +7,7 @@ import NewTask from './newTask';
 
 import {Route} from 'react-router-dom';
 
-import fetchList from '../../api/index';
+import {fetchList, fetchTask} from '../../api/index';
 
 export default class Content extends React.Component{
 
@@ -15,7 +15,8 @@ export default class Content extends React.Component{
         super();
         this.state={
             //tasks: data.todoList
-            taks:{}
+            tasks:[],
+            currentTask:{}
         };
         this.getDetails = this.getDetails.bind(this);
         
@@ -32,20 +33,18 @@ export default class Content extends React.Component{
             this.setState((state)=>({
                 tasks: list.todoList
             }))
-        });
+        }).catch(e=>console.error(e));
     }
 
 
     getDetails(taskId) {
-
-        data.todoList.forEach(element => {
-            if(element.id === taskId) {
-
-                this.setState({
-                currentTask: element
+        
+        fetchTask(taskId).then(task => {
+            this.setState({
+                currentTask: task
             })
-            }
-        });
+        }).catch(e=>console.error(e));
+           
     }
 
 
