@@ -17,7 +17,7 @@ class TasksList extends React.Component {
 
             <div>
 
-                {this.props.tasksList.map((element, index)=>{
+                {this.props.tasksList?.map((element, index)=>{
 
                     return(
                         <div className="taskContainer" key={element.id} >

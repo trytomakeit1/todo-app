@@ -2,19 +2,37 @@ import React from 'react';
 import TasksList from './tasksList';
 import SingleTask from './singleTask';
 import NewTask from './newTask';
-import * as data from '../../tasks.json';
+//import * as data from '../../tasks.json';
+
 
 import {Route} from 'react-router-dom';
+
+import fetchList from '../../api/index';
 
 export default class Content extends React.Component{
 
     constructor(){
         super();
         this.state={
-            tasks: data.todoList
+            //tasks: data.todoList
+            taks:{}
         };
         this.getDetails = this.getDetails.bind(this);
         
+    }
+
+
+
+    componentDidMount(){
+
+        console.log("did mount");
+
+        fetchList().then((list)=>{
+            console.log('list from api', list);
+            this.setState((state)=>({
+                tasks: list.todoList
+            }))
+        });
     }
 
 
