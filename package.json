@@ -19,7 +19,8 @@
     "react-dom": "^16.12.0",
     "react-router-dom": "5.2.0",
     "style-loader": "^1.2.1",
-    "webpack": "^4.41.6"
+    "webpack": "^4.41.6",
+    "mongodb":"^3.5.9"
   },
   "devDependencies": {},
   "scripts": {

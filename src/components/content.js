@@ -31,7 +31,7 @@ export default class Content extends React.Component{
         fetchList().then((list)=>{
             console.log('list from api', list);
             this.setState((state)=>({
-                tasks: list.todoList
+                tasks: list
             }))
         }).catch(e=>console.error(e));
     }
@@ -40,6 +40,7 @@ export default class Content extends React.Component{
     getDetails(taskId) {
         
         fetchTask(taskId).then(task => {
+
             this.setState({
                 currentTask: task
             })
@@ -72,7 +73,6 @@ export default class Content extends React.Component{
                 </Route>
 
                 <Route path="/task/" render={()=>(
-
                     <SingleTask task={this.state.currentTask}/>
                 )}>
                 </Route>

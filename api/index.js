@@ -12,9 +12,9 @@ const fetchList = () => {
 
 const fetchTask = (taskId) => {
 
-    return axios.get(`/api/task/${taskId}`).then(data => {
-        console.log("data of you", data.data);
-        return data.data;
+    return axios.get(`/api/task/${taskId}`).then(taskData => {
+
+        return taskData.data;
     }).catch(e=>console.error(e))
 }
 

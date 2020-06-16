@@ -2,7 +2,7 @@ let express = require('express');
 let api = require("./api/api");
 let app = express();
 
-
+let {insertTasksToDB} = require("./db/dbcalls");
 app.use(express.static("public")); // need this line to read my assets from
 app.set("view engine", "ejs");
 app.get("/", (req,res)=>{
@@ -11,6 +11,8 @@ app.get("/", (req,res)=>{
 
 
 app.use("/api", api);
+
+app.use("/insertTasksToDB", insertTasksToDB);
 
 
 app.listen(8080, ()=>{
