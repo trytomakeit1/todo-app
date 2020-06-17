@@ -7,7 +7,7 @@ import NewTask from './newTask';
 
 import {Route} from 'react-router-dom';
 
-import {fetchList, fetchTask} from '../../api/index';
+import {fetchList, fetchTask, addTask} from '../../api/index';
 
 export default class Content extends React.Component{
 
@@ -51,11 +51,15 @@ export default class Content extends React.Component{
 
     addNewTask(newTask){
 
-        console.log("add new task", newTask);
-        //update the state with new data
-        this.setState((state)=>({
-            tasks: this.state.tasks.concat(newTask)
-        }));
+        addTask(newTask).then((str)=>{
+
+            fetchList().then(listData =>{
+                this.setState({
+                    tasks: listData
+                });
+            })
+            .catch(e => console.error(e));
+        }).catch(e => console.error(e));
 
     }
 
@@ -86,10 +90,7 @@ export default class Content extends React.Component{
                             
                             }
                 
-                
-                
                         }/>
-                   
                    
                     )
                 }

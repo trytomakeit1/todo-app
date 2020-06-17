@@ -22,7 +22,7 @@ class NewTask extends Component {
         // 2) create an object to be added to the main data
 
         let newTask={
-            id: Number(new Date()),
+            //id: Number(new Date()),
             title,
             description,
             date,

@@ -82,4 +82,38 @@ const findTask = (taskId, cb) => {
 }
 
 
-module.exports = {insertTasksToDB, findAllTasks, findTask}
+
+const addTask = (task, cb) =>{
+
+    //check if all fields are filled correctly (FE and BE)
+
+    if(!task.title || !task.description || !task.date) {
+        console.log("some fields missing");
+    }
+    if(!task.finished) {
+        task.finished = false;
+    }
+    let datePieces = task.date.split("-");
+    // supported date formats in Javascript: YYYY-MM-DD or MM/DD/YYYY or 25 Mar 2015 or Mar 25 2015
+    
+    let newDate = datePieces[2]  + "-" + datePieces[1] + "-" + datePieces[0];
+    task.date = Number(new Date(newDate));
+
+    console.log("task to be added:", task);
+    mongoClient.connect(url, (err, client) => {
+
+        let db = client.db(dbName);
+        db.collection(collection).insertOne(task, (err, result) => {
+
+            if(err) {
+                console.log("Error in inserting task");
+                cb(err);}
+            else {console.log("task inserted successfullly");
+                cb(null, "Successfully added the task");}
+        });
+    });
+
+
+}
+
+module.exports = {insertTasksToDB, findAllTasks, findTask, addTask}

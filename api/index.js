@@ -19,4 +19,18 @@ const fetchTask = (taskId) => {
 }
 
 
-module.exports = {fetchList, fetchTask}
+
+const addTask = (newTask) => {
+
+    return axios.post('/api/insertTask', {newTask}).then((result) => {
+        // result is just a string that says :Successfully added the task
+        if(result)
+            return result;
+    }).catch(err =>{
+
+        console.error(err);
+    })
+
+}
+
+module.exports = {fetchList, fetchTask, addTask}
