@@ -37,6 +37,9 @@ body input, body textarea, body button {
 }
 
 
+.margin-l-10 {
+    margin-left: 10px;
+}
 /* Header */
 
 .navbar{
@@ -108,4 +111,11 @@ button:hover, button:focus,
     vertical-align: top;
     min-width: 250px;
     min-height: 100px;
+}
+
+
+.error-message {
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: red;
 }

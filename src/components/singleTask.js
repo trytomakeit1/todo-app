@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-
+import DateControl from './dateControl';
 
 class SingleTask extends Component{
 
@@ -8,9 +8,11 @@ class SingleTask extends Component{
         super(props);
 
         this.state={
+            error:'',
+
             _id: this.props.task._id,
             title: this.props.task.title,
-            date: '',
+            date: this.props.task.date,
             description: this.props.task.description,
             finished: false
             
@@ -31,7 +33,7 @@ class SingleTask extends Component{
 
                 _id: this.props.task._id,
                 title: this.props.task.title,
-                
+                date: this.props.task.date,
                 description: this.props.task.description,
                 finished: this.props.task.finished
             
@@ -64,19 +66,28 @@ class SingleTask extends Component{
     editTask(event){
         event.preventDefault();
 
-        let updatedTask = {
-//            _id: event.target.elements._id.value,
-            title: event.target.elements.title.value,
-            date: Number(new Date()),
-            description: event.target.elements.description.value,
-            finished: event.target.elements.finished.checked
-            
+        let dateValidation = DateControl(event.target.elements.date.value);
+        console.log(dateValidation);
+
+        // Validation
+        if(dateValidation) {
+            this.setState({
+                error: dateValidation
+            });
+        } else {
+            let updatedTask = {
+                //            _id: event.target.elements._id.value,
+                title: event.target.elements.title.value,
+                date: event.target.elements.date.value,
+                description: event.target.elements.description.value,
+                finished: event.target.elements.finished.checked
+                
+            }
+    
+    
+            console.log("updatedTask", updatedTask);
+            this.props.onEdit(event.target.elements._id.value, updatedTask);       
         }
-
-
-        console.log("updatedTask", updatedTask);
-        this.props.onEdit(event.target.elements._id.value, updatedTask);
-
 
     }
 
@@ -102,7 +113,7 @@ class SingleTask extends Component{
 
                         <h5 className="inlineBlock">Due date:</h5>
                         <span style={{padding: '0px 20px'}}>
-                            {new Date(this.props.task.date).toDateString()}
+                            {this.props.task.date}
                         </span>
                         <h5 className="inlineBlock">Done: </h5>
                         {/* checked property should have that control otherwise get the following error.
@@ -137,7 +148,8 @@ class SingleTask extends Component{
 
                         <div className="form-control">
                             <label htmlFor="date">Due date:</label>
-                            <input id="date" type="text" name="date" placeholder="MM/DD/YYYY" value={this.state.date} disabled></input>
+                            <input id="date" type="text" name="date" placeholder="DD/MM/YYYY" value={this.state.date} onChange={this.changeHandler}></input>
+                        <span className="error-message margin-l-10">{this.state.error}</span>
                         </div>
 
                         <div className="form-control display-table">

@@ -30,7 +30,7 @@ class TasksList extends React.Component {
                                 <hr />
                                 <h5 className="inlineBlock">Due date:</h5>
                                 <span style={{padding: '0px 20px'}}>
-                                    {new Date(element.date).toDateString()}
+                                    {element.date}
                                 </span>
                                 <h5 className="inlineBlock">Done: </h5>
 

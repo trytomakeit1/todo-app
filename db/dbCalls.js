@@ -93,11 +93,11 @@ const addTask = (task, cb) =>{
     if(!task.finished) {
         task.finished = false;
     }
-    let datePieces = task.date.split("-");
+    //let datePieces = task.date.split("-");
     // supported date formats in Javascript: YYYY-MM-DD or MM/DD/YYYY or 25 Mar 2015 or Mar 25 2015
     
-    let newDate = datePieces[2]  + "-" + datePieces[1] + "-" + datePieces[0];
-    task.date = Number(new Date(newDate));
+    //let newDate = datePieces[2]  + "-" + datePieces[1] + "-" + datePieces[0];
+    //task.date = Number(new Date(newDate));
 
     console.log("task to be added:", task);
     mongoClient.connect(url, (err, client) => {
@@ -120,7 +120,7 @@ const addTask = (task, cb) =>{
 const updateTask = (taskId, editedTask, cb) =>{
 
     // || !editedTask.date
-    if(!editedTask.title || !editedTask.description) {
+    if(!editedTask.title || !editedTask.description || !editedTask.date) {
         console.log("some fields missing");
     }
     if(!editedTask.finished) {
@@ -133,7 +133,7 @@ const updateTask = (taskId, editedTask, cb) =>{
     ///editedTask.date = Number(new Date(newDate));
 
 
-    editedTask.date = Number(new Date());
+    //editedTask.date = Number(new Date());
     console.log(editedTask);
 
     mongoClient.connect(url, (err, client) => {

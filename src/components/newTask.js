@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
+import DateControl from './dateControl';
+
 
 
 
 class NewTask extends Component {
     constructor(){
         super();
-        this.state={};
+        this.state={
+            error: ''
+        };
         this.addNewTask = this.addNewTask.bind(this);
     }
 
@@ -14,23 +18,35 @@ class NewTask extends Component {
     addNewTask(event){
         // 1) get all the values from input fields
         event.preventDefault();
-        const title = event.target.elements.title.value;
-        const description = event.target.elements.description.value;        
-        const date = event.target.elements.date.value;
+        // Validation
 
-        
-        // 2) create an object to be added to the main data
+        let dateValidation = DateControl(event.target.elements.date.value);
+        console.log("dateValidation", dateValidation);
+        if(dateValidation){
+            //send error msg
+            this.setState({
+                error: dateValidation
+            })
+        } else {
+            const title = event.target.elements.title.value;
+            const description = event.target.elements.description.value;        
+            const date = event.target.elements.date.value;
 
-        let newTask={
-            //id: Number(new Date()),
-            title,
-            description,
-            date,
-            finished: false
+            
+            // 2) create an object to be added to the main data
+
+            let newTask={
+                //id: Number(new Date()),
+                title,
+                description,
+                date,
+                finished: false
+            }
+
+            this.props.onNewTask(newTask);
+
         }
-
-        this.props.onNewTask(newTask);
-
+        
     }
 
 
@@ -48,7 +64,11 @@ class NewTask extends Component {
 
                     <div className="form-control">
                         <label htmlFor="date">Due date:</label>
-                        <input id="date" type="text" name="date" placeholder="MM/DD/YYYY"></input>
+                        {/*pattern="/^\d\d\/\d\d\/\d\d\d\d$/"*/}
+
+                        <input id="date" type="text" name="date" placeholder="DD/MM/YYYY"></input>
+                        <span className="error-message margin-l-10">{this.state.error}</span>
+
                     </div>
 
                     <div className="form-control display-table">
