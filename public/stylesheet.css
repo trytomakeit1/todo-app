@@ -1,5 +1,10 @@
 body {
-    margin: 0
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body input, body textarea, body button {
+    font-family: Arial, Helvetica, sans-serif !important;
+
 }
 
 .container {
@@ -22,6 +27,15 @@ body {
 .display-table {
     display: table;
 }
+
+
+.checkbox-input *{
+    vertical-align: middle;
+}
+.checkbox-input input{
+    min-width: 50px !important;
+}
+
 
 /* Header */
 
