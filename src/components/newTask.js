@@ -1,38 +1,48 @@
 import React, {Component} from 'react';
-import DateControl from './dateControl';
-
-
+import Validate from './validate';
 
 
 class NewTask extends Component {
     constructor(){
         super();
         this.state={
-            error: ''
+            errors: {
+                date: '',
+                title: '',
+                description: ''
+            }
+            
         };
         this.addNewTask = this.addNewTask.bind(this);
     }
 
 
 
+    
+
+
     addNewTask(event){
         // 1) get all the values from input fields
         event.preventDefault();
+
+        const title = event.target.elements.title.value;
+        const description = event.target.elements.description.value;        
+        const date = event.target.elements.date.value;
         // Validation
 
-        let dateValidation = DateControl(event.target.elements.date.value);
-        console.log("dateValidation", dateValidation);
-        if(dateValidation){
-            //send error msg
-            this.setState({
-                error: dateValidation
-            })
-        } else {
-            const title = event.target.elements.title.value;
-            const description = event.target.elements.description.value;        
-            const date = event.target.elements.date.value;
+        let validationResult = Validate(title, date, description);
 
-            
+
+        this.setState({
+            errors: {
+                date: validationResult.errors.date,
+                title: validationResult.errors.title,
+                description: validationResult.errors.description
+            }
+        });
+
+        if (validationResult.errorOccured === 0) {
+
             // 2) create an object to be added to the main data
 
             let newTask={
@@ -47,6 +57,7 @@ class NewTask extends Component {
 
         }
         
+        
     }
 
 
@@ -60,6 +71,8 @@ class NewTask extends Component {
                     <div className="form-control">
                         <label htmlFor="title">Title:</label>
                         <input id="title" type="text" name="title"></input>
+                        <span className="error-message margin-l-10">{this.state.errors.title}</span>
+
                     </div>
 
                     <div className="form-control">
@@ -67,13 +80,15 @@ class NewTask extends Component {
                         {/*pattern="/^\d\d\/\d\d\/\d\d\d\d$/"*/}
 
                         <input id="date" type="text" name="date" placeholder="DD/MM/YYYY"></input>
-                        <span className="error-message margin-l-10">{this.state.error}</span>
+                        <span className="error-message margin-l-10">{this.state.errors.date}</span>
 
                     </div>
 
                     <div className="form-control display-table">
                         <label htmlFor="description">Description:</label>
                         <textarea id="description" name="description"></textarea>
+                        <span className="error-message margin-l-10">{this.state.errors.description}</span>
+
                     </div>
 
                     <div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import DateControl from './dateControl';
+import Validate from './validate';
 
 class SingleTask extends Component{
 
@@ -8,7 +8,12 @@ class SingleTask extends Component{
         super(props);
 
         this.state={
-            error:'',
+            
+            errors: {
+                date: '',
+                title: '',
+                description: ''
+            },
 
             _id: this.props.task._id,
             title: this.props.task.title,
@@ -30,7 +35,7 @@ class SingleTask extends Component{
         if(prevProps.task !== this.props.task) {
 
             this.setState({
-
+                
                 _id: this.props.task._id,
                 title: this.props.task.title,
                 date: this.props.task.date,
@@ -66,20 +71,31 @@ class SingleTask extends Component{
     editTask(event){
         event.preventDefault();
 
-        let dateValidation = DateControl(event.target.elements.date.value);
-        console.log(dateValidation);
-
+        
+        const title = event.target.elements.title.value;
+        const description = event.target.elements.description.value;        
+        const date = event.target.elements.date.value;
         // Validation
-        if(dateValidation) {
-            this.setState({
-                error: dateValidation
-            });
-        } else {
+
+        let validationResult = Validate(title, date, description);
+
+
+        this.setState({
+            errors: {
+                date: validationResult.errors.date,
+                title: validationResult.errors.title,
+                description: validationResult.errors.description
+            }
+        });
+
+
+        if(validationResult.errorOccured === 0) {
+            
             let updatedTask = {
                 //            _id: event.target.elements._id.value,
-                title: event.target.elements.title.value,
-                date: event.target.elements.date.value,
-                description: event.target.elements.description.value,
+                title,
+                date,
+                description,
                 finished: event.target.elements.finished.checked
                 
             }
@@ -144,17 +160,21 @@ class SingleTask extends Component{
                         <div className="form-control">
                             <label htmlFor="title">Title:</label>
                             <input id="title" type="text" name="title" value={this.state.title} onChange={this.changeHandler}></input>
+                            <span className="error-message margin-l-10">{this.state.errors.title}</span>
+
                         </div>
 
                         <div className="form-control">
                             <label htmlFor="date">Due date:</label>
                             <input id="date" type="text" name="date" placeholder="DD/MM/YYYY" value={this.state.date} onChange={this.changeHandler}></input>
-                        <span className="error-message margin-l-10">{this.state.error}</span>
+                            <span className="error-message margin-l-10">{this.state.errors.date}</span>
                         </div>
 
                         <div className="form-control display-table">
                             <label htmlFor="description">Description:</label>
                             <textarea id="description" name="description" value={this.state.description} onChange={this.changeHandler}></textarea>
+                            <span className="error-message margin-l-10">{this.state.errors.description}</span>
+
                         </div>
 
                         <div className="form-control display-table checkbox-input">

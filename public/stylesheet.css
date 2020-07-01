@@ -10,6 +10,7 @@ body input, body textarea, body button {
 .container {
     max-width: 1000px;
     margin: 0 auto;
+    padding: 0 30px 30px;
 }
 
 
