@@ -48,7 +48,7 @@ class NewTask extends Component {
 
                     <div className="form-control">
                         <label htmlFor="date">Due date:</label>
-                        <input id="date" type="text" name="date" placeholder="DD-MM-YYYY"></input>
+                        <input id="date" type="text" name="date" placeholder="MM/DD/YYYY"></input>
                     </div>
 
                     <div className="form-control display-table">
@@ -59,7 +59,10 @@ class NewTask extends Component {
                     <div>
                         <input type="hidden" name="finished" value="false"></input>
                     </div>
-                    <button>Submit</button>
+                    <div className="pull-right">
+                        <button>Submit</button>
+                    </div>
+                    <div style={{clear: "both"}}></div>
                 </form>
             </div>
         </div>);

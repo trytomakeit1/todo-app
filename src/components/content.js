@@ -4,10 +4,9 @@ import SingleTask from './singleTask';
 import NewTask from './newTask';
 //import * as data from '../../tasks.json';
 
-
 import {Route} from 'react-router-dom';
 
-import {fetchList, fetchTask, addTask} from '../../api/index';
+import {fetchList, fetchTask, addTask, updateTask} from '../../api/index';
 
 export default class Content extends React.Component{
 
@@ -19,6 +18,7 @@ export default class Content extends React.Component{
             currentTask:{}
         };
         this.getDetails = this.getDetails.bind(this);
+        this.editTask = this.editTask.bind(this);
         
     }
 
@@ -26,10 +26,8 @@ export default class Content extends React.Component{
 
     componentDidMount(){
 
-        console.log("did mount");
-
         fetchList().then((list)=>{
-            console.log('list from api', list);
+            //console.log('list from api', list);
             this.setState((state)=>({
                 tasks: list
             }))
@@ -40,6 +38,7 @@ export default class Content extends React.Component{
     getDetails(taskId) {
         
         fetchTask(taskId).then(task => {
+            console.log(task);
 
             this.setState({
                 currentTask: task
@@ -64,6 +63,43 @@ export default class Content extends React.Component{
     }
 
 
+    editTask(taskId, editedTask){
+
+
+        updateTask(taskId, editedTask).then(result => {
+
+            // instead of calling the DB again, just update the state with the updated task.
+            let newTasks = []
+            this.state.tasks.forEach((singleTask, index) =>{
+                console.log(singleTask);
+
+                console.log(taskId);
+                if(singleTask._id === taskId){
+
+                    let newSingleTask = {...singleTask};
+                    // update this element
+                    newSingleTask.title = editedTask.title;
+                    newSingleTask.date = editedTask.date;
+                    newSingleTask.description = editedTask.description;
+                    newSingleTask.finished = editedTask.finished;
+
+                    newTasks.push(newSingleTask);
+                    
+                } else {
+                    newTasks.push(singleTask);
+                }
+            });
+
+            console.log(newTasks);
+        
+            this.setState({
+                tasks: newTasks
+            });
+        }).catch(e=>console.error(e));
+ 
+    }
+
+
     render(){
         
         return(
@@ -76,8 +112,12 @@ export default class Content extends React.Component{
                 
                 </Route>
 
-                <Route path="/task/" render={()=>(
-                    <SingleTask task={this.state.currentTask}/>
+                <Route path="/task/" render={({history})=>(
+                    <SingleTask task={this.state.currentTask} onEdit={(id, task)=>
+                        {this.editTask(id, task);
+                            history.push("/");
+                        }
+                    }/>
                 )}>
                 </Route>
 
