@@ -106,9 +106,9 @@ const addTask = (task, cb) =>{
         db.collection(collection).insertOne(task, (err, result) => {
 
             if(err) {
-                console.log("Error in inserting task");
+                console.log("Error in inserting task", task);
                 cb(err);}
-            else {console.log("task inserted successfullly");
+            else {
                 cb(null, "Successfully added the task");}
         });
     });
@@ -116,4 +116,37 @@ const addTask = (task, cb) =>{
 
 }
 
-module.exports = {insertTasksToDB, findAllTasks, findTask, addTask}
+
+const updateTask = (taskId, editedTask, cb) =>{
+
+    // || !editedTask.date
+    if(!editedTask.title || !editedTask.description) {
+        console.log("some fields missing");
+    }
+    if(!editedTask.finished) {
+        editedTask.finished = false;
+    }
+   /// let datePieces = editedTask.date.split("-");
+    // supported date formats in Javascript: YYYY-MM-DD or MM/DD/YYYY or 25 Mar 2015 or Mar 25 2015
+    
+    ///let newDate = datePieces[2]  + "-" + datePieces[1] + "-" + datePieces[0];
+    ///editedTask.date = Number(new Date(newDate));
+
+
+    editedTask.date = Number(new Date());
+    console.log(editedTask);
+
+    mongoClient.connect(url, (err, client) => {
+        let db = client.db(dbName);
+        db.collection(collection).updateOne({"_id": new ObjectID(taskId)}, {$set: editedTask}, (err, result) => {
+            if(err){
+                console.log("Error in update task ",taskId); cb(err);
+            }else{
+                cb(null, "Successfully update the task")
+            }
+        });
+    });
+
+}
+
+module.exports = {insertTasksToDB, findAllTasks, findTask, addTask, updateTask}

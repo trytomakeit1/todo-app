@@ -5,7 +5,7 @@ let router = express.Router();
 
 //let data = require("../tasks.json");
 
-let bodyParser = require("body-parser");
+//let bodyParser = require("body-parser");
 
 let dbCalls = require('../db/dbCalls');
 
@@ -44,7 +44,8 @@ router.get("/task/:id", (req,res)=>{
 
 
 // router post_add new task
-router.post('/insertTask', bodyParser.json(), (req,res) => {
+// bodyParser.json(),
+router.post('/insertTask', (req,res) => {
 
     dbCalls.addTask(req.body.newTask, (err, result)=>{
 
@@ -52,6 +53,20 @@ router.post('/insertTask', bodyParser.json(), (req,res) => {
 
     });
 
+});
+
+
+
+//bodyParser.json(),
+router.post('/updateTask/:id',  (req, res) => {
+
+    console.log("in api: id", req.params.id, " task ", req.body.editedTask)
+
+    dbCalls.updateTask(req.params.id, req.body.editedTask, (err, result) => {
+        console.log("in api: result of dbcall" , result);
+
+        if(!err) res.send(result);
+    });
 });
 
 

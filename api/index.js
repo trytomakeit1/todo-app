@@ -2,7 +2,6 @@ let axios = require("axios");
 
 const fetchList = () => {
     return axios.get("/api/list").then(listData => {
-        console.log("in get from axios", listData);
 
         return listData.data;
     }).catch(e=>console.error(e))
@@ -33,4 +32,15 @@ const addTask = (newTask) => {
 
 }
 
-module.exports = {fetchList, fetchTask, addTask}
+const updateTask = (taskId, editedTask) => {
+    console.log(" index js ", taskId, editedTask);
+    return axios.post(`/api/updateTask/${taskId}`, {editedTask})
+    .then((result) => {
+        console.log(result);
+        return result;
+    })
+    .catch(e=>console.error(e));
+
+}
+
+module.exports = {fetchList, fetchTask, addTask, updateTask}
