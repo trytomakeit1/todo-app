@@ -160,20 +160,20 @@ class SingleTask extends Component{
                         <div className="form-control">
                             <label htmlFor="title">Title:</label>
                             <input id="title" type="text" name="title" value={this.state.title} onChange={this.changeHandler}></input>
-                            <span className="error-message margin-l-10">{this.state.errors.title}</span>
+                            <span className="message error-message margin-l-10">{this.state.errors.title}</span>
 
                         </div>
 
                         <div className="form-control">
                             <label htmlFor="date">Due date:</label>
                             <input id="date" type="text" name="date" placeholder="DD/MM/YYYY" value={this.state.date} onChange={this.changeHandler}></input>
-                            <span className="error-message margin-l-10">{this.state.errors.date}</span>
+                            <span className="message error-message margin-l-10">{this.state.errors.date}</span>
                         </div>
 
                         <div className="form-control display-table">
                             <label htmlFor="description">Description:</label>
                             <textarea id="description" name="description" value={this.state.description} onChange={this.changeHandler}></textarea>
-                            <span className="error-message margin-l-10">{this.state.errors.description}</span>
+                            <span className="message error-message margin-l-10">{this.state.errors.description}</span>
 
                         </div>
 

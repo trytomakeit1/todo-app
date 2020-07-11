@@ -16,9 +16,11 @@ class TasksList extends React.Component {
         return(
 
             <div>
+                <p className="message error-message">{this.props.onError}</p>
 
-                {this.props.tasksList?.map((element, index)=>{
+                <p className="message info-message">{this.props.onInfo}</p>
 
+                {this.props.tasksList.map((element, index)=>{
                     return(
                         <div className="taskContainer" key={element._id} >
                             <div>

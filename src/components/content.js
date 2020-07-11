@@ -14,6 +14,8 @@ export default class Content extends React.Component{
         super();
         this.state={
             //tasks: data.todoList
+            error: '',
+            msg: '',
             tasks:[],
             currentTask:{}
         };
@@ -26,17 +28,48 @@ export default class Content extends React.Component{
 
     componentDidMount(){
 
+        fetchList((err, list) => {
+            if(err) {
+                console.error(err);
+                this.setState({
+                    error: "There is a problem with loading the tasks list."
+                });
+
+            } else {
+                this.setState((state)=>({
+                    tasks: list
+                }));
+            }
+        });
+        /*
         fetchList().then((list)=>{
             //console.log('list from api', list);
             this.setState((state)=>({
                 tasks: list
             }))
         }).catch(e=>console.error(e));
+        */
     }
 
 
     getDetails(taskId) {
-        
+
+        fetchTask(taskId, (err, task)=>{
+            if(err) {
+                console.error(err);
+                this.setState({
+                    error: "There is a problem with loading the task."
+                });
+
+            } else {
+                this.setState((state)=>({
+                    currentTask: task
+                }));
+            }
+
+        });
+
+        /*
         fetchTask(taskId).then(task => {
             console.log(task);
 
@@ -44,12 +77,42 @@ export default class Content extends React.Component{
                 currentTask: task
             })
         }).catch(e=>console.error(e));
+        */
            
     }
 
 
     addNewTask(newTask){
 
+        addTask(newTask, (err, result)=>{
+
+            if(err) {
+                console.error(err);
+                this.setState({
+                    error: "There is a problem with adding the task."
+                });
+
+            } else {
+
+                fetchList((err, list) => {
+                    if(err) {
+                        console.error(err);
+                        this.setState({
+                            error: "There is a problem with loading the tasks list."
+                        });
+
+                    } else {
+                        this.setState((state)=>({
+                            tasks: list,
+                            msg: result
+                        }));
+                    }
+                });
+            }
+
+        });
+
+        /*
         addTask(newTask).then((str)=>{
 
             fetchList().then(listData =>{
@@ -59,13 +122,41 @@ export default class Content extends React.Component{
             })
             .catch(e => console.error(e));
         }).catch(e => console.error(e));
+        */
 
     }
 
 
     editTask(taskId, editedTask){
 
+        updateTask(taskId, editedTask,(err, result) =>{
 
+            if(err) {
+                console.error(err);
+                this.setState({
+                    error: "There is a problem with adding the task."
+                });
+
+            } else {
+
+                fetchList((err, list) => {
+                    if(err) {
+                        console.error(err);
+                        this.setState({
+                            error: "There is a problem with loading the tasks list."
+                        });
+
+                    } else {
+                        this.setState((state)=>({
+                            tasks: list,
+                            msg: result
+                        }));
+                    }
+                });
+            }
+
+
+        /*
         updateTask(taskId, editedTask).then(result => {
 
             // instead of calling the DB again, just update the state with the updated task.
@@ -96,6 +187,8 @@ export default class Content extends React.Component{
                 tasks: newTasks
             });
         }).catch(e=>console.error(e));
+        */
+        });
  
     }
 
@@ -107,31 +200,41 @@ export default class Content extends React.Component{
                 <p>This is the main content.</p>
                 <Route exact path="/" render={()=>(
                     
-                    <TasksList tasksList={this.state.tasks} getDetails={(taskId)=>this.getDetails(taskId)} />
+                    <TasksList tasksList={this.state.tasks} getDetails={(taskId)=>this.getDetails(taskId)}
+                    onError={this.state.error}
+                    onInfo={this.state.msg} />
                 )}>
                 
                 </Route>
 
-                <Route path="/task/" render={({history})=>(
-                    <SingleTask task={this.state.currentTask} onEdit={(id, task)=>
-                        {this.editTask(id, task);
-                            history.push("/");
+                <Route path="/task/" render={({history})=>{
+                    // if is No error fetching the task
+                    if(!this.state.error || this.state.error === ''){
+                        return (<SingleTask task={this.state.currentTask} onEdit={(id, task)=>
+                            {this.editTask(id, task);
+                                history.push("/");
+                            }
                         }
-                    }/>
-                )}>
+                        onError={this.state.error} />)}
+                    else {
+                        // TODO
+                        // Warning: Cannot update during an existing state transition (such as within `render`).
+                        // Render methods should be a pure function of props and state
+                        history.push("/");
+
+                    }
+                }}>
                 </Route>
 
                 <Route path="/new" render={({history})=>{
                     return (
-                        <NewTask  onNewTask={(newTask)=>
+                        <NewTask onNewTask={(newTask)=>
                             {
                                 this.addNewTask(newTask);
                                 history.push("/");
                             
                             }
-                
-                        }/>
-                   
+                        } />
                     )
                 }
                 }>

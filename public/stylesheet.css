@@ -115,8 +115,14 @@ button:hover, button:focus,
 }
 
 
-.error-message {
+.message {
     font-weight: 600;
     font-size: 0.7rem;
+}
+.error-message {
     color: red;
+}
+
+.info-message {
+    color: #4ec84e;
 }

@@ -71,7 +71,7 @@ class NewTask extends Component {
                     <div className="form-control">
                         <label htmlFor="title">Title:</label>
                         <input id="title" type="text" name="title"></input>
-                        <span className="error-message margin-l-10">{this.state.errors.title}</span>
+                        <span className="message error-message margin-l-10">{this.state.errors.title}</span>
 
                     </div>
 
@@ -80,14 +80,14 @@ class NewTask extends Component {
                         {/*pattern="/^\d\d\/\d\d\/\d\d\d\d$/"*/}
 
                         <input id="date" type="text" name="date" placeholder="DD/MM/YYYY"></input>
-                        <span className="error-message margin-l-10">{this.state.errors.date}</span>
+                        <span className="message error-message margin-l-10">{this.state.errors.date}</span>
 
                     </div>
 
                     <div className="form-control display-table">
                         <label htmlFor="description">Description:</label>
                         <textarea id="description" name="description"></textarea>
-                        <span className="error-message margin-l-10">{this.state.errors.description}</span>
+                        <span className="message error-message margin-l-10">{this.state.errors.description}</span>
 
                     </div>
 
