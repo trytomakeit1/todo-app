@@ -6,7 +6,7 @@ import NewTask from './newTask';
 
 import {Route} from 'react-router-dom';
 
-import {fetchList, fetchTask, addTask, updateTask} from '../../api/index';
+import {fetchList, fetchTask, addTask, updateTask, deleteTask} from '../../api/index';
 
 export default class Content extends React.Component{
 
@@ -21,6 +21,7 @@ export default class Content extends React.Component{
         };
         this.getDetails = this.getDetails.bind(this);
         this.editTask = this.editTask.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
         
     }
 
@@ -134,7 +135,7 @@ export default class Content extends React.Component{
             if(err) {
                 console.error(err);
                 this.setState({
-                    error: "There is a problem with adding the task."
+                    error: "There is a problem with updating the task."
                 });
 
             } else {
@@ -193,6 +194,42 @@ export default class Content extends React.Component{
     }
 
 
+
+    deleteTask(taskId){
+
+        deleteTask(taskId, (err, result) => {
+
+            if(err) {
+                console.error(err);
+                this.setState({
+                    error: "There is a problem with deleting the task."
+                });
+
+            } else {
+
+                fetchList((err, list) => {
+                    if(err) {
+                        console.error(err);
+                        this.setState({
+                            error: "There is a problem with loading the tasks list."
+                        });
+
+                    } else {
+                        this.setState((state)=>({
+                            tasks: list,
+                            msg: result
+                        }));
+                    }
+                });
+            }
+
+
+        });
+
+    }
+
+
+
     render(){
         
         return(
@@ -200,7 +237,9 @@ export default class Content extends React.Component{
                 <p>This is the main content.</p>
                 <Route exact path="/" render={()=>(
                     
-                    <TasksList tasksList={this.state.tasks} getDetails={(taskId)=>this.getDetails(taskId)}
+                    <TasksList tasksList={this.state.tasks}
+                    getDetails={(taskId)=>this.getDetails(taskId)}
+                    onDeleteTask={(taskId)=>this.deleteTask(taskId)}
                     onError={this.state.error}
                     onInfo={this.state.msg} />
                 )}>

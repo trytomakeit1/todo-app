@@ -126,3 +126,8 @@ button:hover, button:focus,
 .info-message {
     color: #4ec84e;
 }
+
+.trash {
+    background-color: rgb(253, 32, 32) !important;
+    padding: 10px !important;
+}

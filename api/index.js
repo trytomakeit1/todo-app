@@ -1,7 +1,7 @@
 let axios = require("axios");
 
 const fetchList = (cb) => {
-    return axios.get("/api/list").then(listData => {
+    axios.get("/api/list").then(listData => {
         
         if(listData.data && listData.data != "") {
             if(listData.data.error && listData.data.error !== "") {
@@ -16,7 +16,7 @@ const fetchList = (cb) => {
 
         }
     }).catch(e => {
-            cb("Error-There was a problem calling api/list" + e);
+            cb("Error-There was a problem calling api/list: " + e);
 
         })
 }
@@ -25,7 +25,7 @@ const fetchList = (cb) => {
 
 const fetchTask = (taskId,cb) => {
 
-    return axios.get(`/api/task/${taskId}`).then(taskData => {
+    axios.get(`/api/task/${taskId}`).then(taskData => {
 
         if(taskData.data && taskData.data != "") {
             if(taskData.data.error && taskData.data.error !== "") {
@@ -39,14 +39,14 @@ const fetchTask = (taskId,cb) => {
            cb("No response was returned from the api");
 
         }
-    }).catch(e=>cb("Error-There was a problem calling api/task" + e))
+    }).catch(e=>cb("Error-There was a problem calling api/task: " + e))
 }
 
 
 
 const addTask = (newTask,cb) => {
 
-    return axios.post('/api/insertTask', {newTask}).then((result) => {
+    axios.post('/api/insertTask', {newTask}).then((result) => {
         // result is just a string that says :Successfully added the task
         if(result.data && result.data != "") {
             if(result.data.error && result.data.error !== "") {
@@ -62,14 +62,14 @@ const addTask = (newTask,cb) => {
         }
     }).catch(e =>{
 
-        cb("Error-There was a problem calling api/insertTask" + e);
+        cb("Error-There was a problem calling api/insertTask: " + e);
     })
 
 }
 
 const updateTask = (taskId, editedTask, cb) => {
 
-    return axios.post(`/api/updateTask/${taskId}`, {editedTask})
+    axios.post(`/api/updateTask/${taskId}`, {editedTask})
     .then((result) => {
         
         if(result.data && result.data != "") {
@@ -85,8 +85,33 @@ const updateTask = (taskId, editedTask, cb) => {
 
         }
     })
-    .catch(e=>cb("Error-There was a problem calling api/updateTask" + e));
+    .catch(e=>cb("Error-There was a problem calling api/updateTask: " + e));
 
 }
 
-module.exports = {fetchList, fetchTask, addTask, updateTask}
+
+const deleteTask = (taskId, cb) => {
+
+    axios.post(`/api/removeTask/${taskId}`)
+    .then((result)=>{
+
+        if(result.data && result.data != "") {
+            if(result.data.error && result.data.error !== "") {
+                cb(result.data.error);
+
+            } else {
+                cb(null, result.data.result);
+
+            }
+        } else {
+            cb("No response was returned from the api");
+
+        }
+
+    }).catch(e=>cb("Error-There was a problem calling api/removeTask: " + e));
+}
+
+
+
+
+module.exports = {fetchList, fetchTask, addTask, updateTask, deleteTask}

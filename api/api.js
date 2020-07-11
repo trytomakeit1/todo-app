@@ -77,9 +77,6 @@ router.post('/updateTask/:id',  (req, res) => {
 router.post('/removeTask/:id', (req, res)=>{
 
     dbCalls.deleteTask(req.params.id, (err, result) => {
-        console.log("err", err);
-
-        console.log("result", result);
         let response = {
             error: err,
             result

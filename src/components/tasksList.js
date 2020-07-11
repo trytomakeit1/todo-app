@@ -25,9 +25,12 @@ class TasksList extends React.Component {
                         <div className="taskContainer" key={element._id} >
                             <div>
                                 <div>
+                                    <Link className="button pull-right trash" to={'/'} onClick={()=>this.props.onDeleteTask(element._id)}>Delete task</Link>
+
                                     <h5 className="inlineBlock">Title:</h5>
                                     <span style={{padding: '0px 20px'}}>{element.title}</span>
                                 </div>
+                                <div style={{clear: 'both'}}></div>
 
                                 <hr />
                                 <h5 className="inlineBlock">Due date:</h5>
