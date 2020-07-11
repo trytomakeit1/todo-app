@@ -164,4 +164,34 @@ const updateTask = (taskId, editedTask, cb) =>{
 
 }
 
-module.exports = {insertTasksToDB, findAllTasks, findTask, addTask, updateTask}
+
+const deleteTask = (taskId, cb) =>{
+
+    if(!taskId) {
+        console.log("Error-dbCalls-deleteTask: missing taskId:", taskId);
+        cb("*Error: can not delete task.");
+    
+    }
+
+    mongoClient.connect(url, (err, client)=>{
+
+        if(err) {
+            console.error("Error-dbCalls-deleteTask: problem connecting to DB while deleting task:", taskId, " error:", err);
+            cb("*Error: an error occured while deleting the task");
+        }
+        let db = client.db(dbName);
+        db.collection(collection).remove({_id: new ObjectID(taskId)}, (err, result)=>{
+
+            if(err) {console.error("Error-dbCalls-deleteTask: problem deleting taskId:", taskId, " error:", err); 
+                cb("*Error: an error occured while deleting the task");
+
+            } else {
+                cb(null, "Successfully deleted the task");
+            }
+
+        });
+    });
+}
+
+
+module.exports = {insertTasksToDB, findAllTasks, findTask, addTask, updateTask, deleteTask}
